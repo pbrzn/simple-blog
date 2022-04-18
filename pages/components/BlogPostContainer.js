@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import BlogPost from './BlogPost';
+import Link from 'next/link';
 
 function BlogPostContainer() {
   const [ posts, setPosts ] = useState(null);
@@ -26,7 +26,20 @@ function BlogPostContainer() {
     return (
       <div>
         <ul>
-          {posts.map(post => (<BlogPost key={post.id} postData={post} />))}
+          {posts.map(post => {
+            return (
+              <li key={post.id}>
+                <Link href={{
+                    pathname: "/posts/[id]",
+                    query: { id: post.id }
+                  }}
+                  as={`/posts/${post.id}`}
+                >
+                  <h2>{post.title} by: {post.author}</h2>
+                </Link>
+              </li>
+            )
+          })}
         </ul>
       </div>
     )
